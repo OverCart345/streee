@@ -8,20 +8,19 @@ from sklearn.metrics import log_loss, roc_auc_score, confusion_matrix, classific
 import numpy as np;
 from sklearn.preprocessing import StandardScaler
 
-model_save_path = '/'
-
 
 
 def load_models():
-    model_classification = pickle.load(open(model_save_path + 'model_classification.pkl', 'rb'))
-    model_regression = pickle.load(open(model_save_path + 'model_regression.pkl', 'rb'))
+    model_classification = pickle.load(open('model_classification.pkl', 'rb'))
+    model_regression = pickle.load(open('model_regression.pkl', 'rb'))
     return model_classification, model_regression
 
 def machine_learning():
     st.title("Datasets")
     uploaded_file = st.file_uploader("Загрузите ваш CSV файл", type="csv")
-    data = pd.read_csv(uploaded_file)
+    
     if uploaded_file is not None:
+        data = pd.read_csv(uploaded_file)
         if uploaded_file.name == "cart_transdata_filtered.csv":
             st.write("Файл cart_transdata_filtered.csv был загружен")
             y = data["fraud"]
@@ -34,7 +33,7 @@ def machine_learning():
             X_test_binary = X_test.iloc[:, 3:7]
             X_train_scaled = np.column_stack((X_train_scaled_numeric, X_train_binary))
             X_test_scaled = np.column_stack((X_test_scaled_numeric, X_test_binary))
-            model_classification = pickle.load(open(model_save_path + 'model_classification.pkl', 'rb'))
+            model_classification = pickle.load(open('model_classification.pkl', 'rb'))
             predictions_classification = model_classification.predict(X_test_scaled)
             accuracy_classification = accuracy_score(y_test, predictions_classification)
             st.success(f"Точность: {accuracy_classification}")
@@ -44,7 +43,7 @@ def machine_learning():
             
 
 
-            model_regression = pickle.load(open(model_save_path + 'model_regression.pkl', 'rb'))
+            model_regression = pickle.load(open('model_regression.pkl', 'rb'))
             y = data["trip_duration"]
             X = data.drop(["trip_duration"], axis=1)
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,random_state=0)
