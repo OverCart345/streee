@@ -33,7 +33,7 @@ def machine_learning():
             X_test_binary = X_test.iloc[:, 3:7]
             X_train_scaled = np.column_stack((X_train_scaled_numeric, X_train_binary))
             X_test_scaled = np.column_stack((X_test_scaled_numeric, X_test_binary))
-            model_classification = pickle.load(open('../model_classification.pkl', 'rb'))
+            model_classification = pickle.load(open('/workspaces/streee/model_classification.pkl', 'rb'))
             predictions_classification = model_classification.predict(X_test_scaled)
             accuracy_classification = accuracy_score(y_test, predictions_classification)
             st.success(f"Точность: {accuracy_classification}")
@@ -43,7 +43,7 @@ def machine_learning():
             
 
 
-            model_regression = pickle.load(open('../model_regression.pkl', 'rb'))
+            model_regression = pickle.load(open('/workspaces/streee/model_regression.pkl', 'rb'))
             y = data["trip_duration"]
             X = data.drop(["trip_duration"], axis=1)
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,random_state=0)
